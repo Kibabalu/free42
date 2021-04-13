@@ -1,0 +1,918 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ (FPLT)
+@@@@ DSC: Plot a MVAR function
+@@@@ GBL: EqP, EqV, LLIM, ULIM, STEP, YMIN, YMAX, YSTP
+@@@@ GBL: ZLLIM, ZULIM -- zoom box limits.
+@@@@ FAQ: STEP & YSTP are used for grids
+@@@@ FLG: 03: PREF: Set: draw dots only; Clear: connect dots
+@@@@ FLG: 04: PREF: Set: Use GrMod 2; Clear Use GrMod 3
+@@@@ FLG: 05: PREF: Reserved
+@@@@ FLG: 82: TEMP: Used for max/min computation
+@@@@ FLG: 83: TEMP: Used for automatic autoscale redraw
+@@@@ FLG: 84: TEMP: Reserved
+@@@@ FRE: LBL: 79-99
+@@@@ REQ: REQ:free42>=3.0
+@@@@ UPD: 2021-04-09
+
+00 { Error [58, 42]! Code: '42 FUNC 00'; Message: unvalid command }
+01 LBL "FPLT"
+02 FC? 04
+03 3
+04 FS? 04
+05 2
+06 STO "GrMod"
+07 R↓
+08 131
+09 STO "ResX"
+10 R↓
+11 16
+12 STO "ResY"
+13 R↓
+14 XEQ 74
+15 LBL 01 @@@@ Page 1 of menu FPLT
+16 CF 83 @@@@ Turn off auto yscale redraw
+17 CLMENU
+18 "EQ"
+19 KEY 1 XEQ 02
+20 "XRNG"
+21 KEY 2 XEQ 03
+22 "YRNG"
+23 KEY 3 XEQ 04
+24 "GRID"
+25 KEY 4 XEQ 05
+26 "COMP"
+27 KEY 5 XEQ 06
+28 "PLOT"
+29 KEY 6 XEQ 07
+30 KEY 9 GTO 00
+31 MENU
+32 STOP
+33 GTO 01
+34 LBL 00 @@@@ Application Exit
+35 EXITALL
+36 RTN
+37 LBL 02 @@@@ Action for menu key EQ
+38 0
+39 XEQ "PICF"
+40 RTN
+41 LBL 03 @@@@ Action for menu key XRNG
+42 FUNC 00
+43 FS? 64
+44 GTO 10 @@@@ For shift we just display settings
+45 X≠Y?
+46 GTO 24
+47 X=0?
+48 GTO 26
+@@@@ Code for LLIM=ULIM≠0
+49 RCL "ULIM"
+50 RCL- "LLIM"
+51 2
+52 ÷
+53 ×
+54 RCL "ULIM"
+55 RCL+ "LLIM"
+56 2
+57 ÷
+58 RCL ST X
+59 RCL ST Z
+60 -
+61 STO "LLIM"
+62 R↓
+63 +
+64 STO "ULIM"
+65 GTO 10
+66 LBL 26
+@@@@ Code for LLIM=ULIM=0
+67 CLV "LLIM"
+68 CLV "ULIM"
+69 XEQ 74
+70 GTO 10
+71 LBL 24
+@@@@ Code for LLIM≠ULIM
+72 STO "ULIM"
+73 X<>Y
+74 STO "LLIM"
+75 X<>Y
+76 LBL 10
+77 "XMIN: "
+78 RCL "LLIM"
+79 ARCL ST X
+80 ⊢"␊XMAX: "
+81 RCL "ULIM"
+82 ARCL ST X
+83 AVIEW
+84 RTN
+85 LBL 04 @@@@ Action for menu key YRNG
+86 FUNC 00
+87 FS? 64
+88 GTO 50 @@@@ For shift we just display settings
+89 X≠Y?
+90 GTO 22
+91 X=0?
+92 GTO 23
+@@@@ Code for YMIN=YMAX≠0
+93 RCL "YMAX"
+94 RCL- "YMIN"
+95 2
+96 ÷
+97 ×
+98 RCL "YMAX"
+99 RCL+ "YMIN"
+100 2
+101 ÷
+102 RCL ST X
+103 RCL ST Z
+104 -
+105 STO "YMIN"
+106 R↓
+107 +
+108 STO "YMAX"
+109 GTO 50
+110 LBL 23
+@@@@ Code for YMIN=YMAX=0
+111 CLV "YMIN"
+112 CLV "YMAX"
+113 XEQ 74
+114 GTO 50
+115 LBL 22
+@@@@ Code for YMIN≠YMAX
+116 STO "YMAX"
+117 X<>Y
+118 STO "YMIN"
+119 X<>Y
+120 LBL 50
+121 "YMIN: "
+122 RCL "YMIN"
+123 ARCL ST X
+124 ⊢"␊YMAX: "
+125 RCL "YMAX"
+126 ARCL ST X
+127 AVIEW
+128 RTN
+129 LBL 05 @@@@ Action for menu key GRID
+130 FUNC 00
+131 FS? 64
+132 GTO 49 @@@@ For shift we just display settings
+133 STO "YSTP"
+134 X<>Y
+135 STO "STEP"
+136 LBL 49
+137 "XSTP: "
+138 RCL "STEP"
+139 ARCL ST X
+140 ⊢"␊YSTP: "
+141 RCL "YSTP"
+142 ARCL ST X
+143 AVIEW
+144 RTN
+145 LBL 06 @@@@ Action for menu key COMP
+146 LBL 30 @@@@ menu COMP
+147 CLMENU
+148 "ROOT"
+149 KEY 1 XEQ 32
+150 "INTG"
+151 KEY 2 XEQ 33
+152 "EVAL"
+153 KEY 3 XEQ 34
+@@@@ "RSV1"
+@@@@ KEY 4 XEQ 35
+@@@@ "RSV2"
+@@@@ KEY 5 XEQ 36
+154 "R<>B"
+155 KEY 6 XEQ 37
+156 KEY 9 GTO 31
+157 MENU
+158 STOP
+159 GTO 30
+160 LBL 31 @@@@ Menu Exit
+161 RTN
+162 LBL 32 @@@@ Action for menu key FSLV
+163 FUNC 04
+164 XEQ "FSLV"
+165 RTN
+166 LBL 33 @@@@ Action for menu key FINT
+167 FUNC 01
+168 RCL "ULIM"
+169 RCL- "LLIM"
+170 RCL÷ "ResX"
+171 RCL "YMAX"
+172 RCL- "YMIN"
+173 RCL÷ "ResY"
+174 ×
+175 XEQ "FINT"
+176 RTN
+177 LBL 34 @@@@ Action for menu key RSV0
+178 XEQ "FEVL"
+@@@@ RSV0
+179 RTN
+180 LBL 35 @@@@ Action for menu key RSV1
+@@@@ RSV1
+181 RTN
+182 LBL 36 @@@@ Action for menu key RSV2
+@@@@ RSV2
+183 RTN
+184 LBL 37 @@@@ Action for menu key RANGE <> BOX swap
+185 XEQ 39
+186 RTN
+187 RCL "GrMod"
+188 LBL 07 @@@@ Action for menu key PLOT
+@@@@ Set AGRAPH flags to OR
+189 CF 34
+190 CF 35
+@@@@ Just in case an important var is not set
+191 XEQ 74
+192 SF 25
+193 RCL "EqV"
+194 FC?C 25
+195 GTO 76
+196 R↓
+197 SF 25
+198 RCL "EqP"
+199 FC?C 25
+200 GTO 76
+201 R↓
+202 GTO 77 @@ All good
+203 LBL 76
+204 "ERR: Pick An"
+205 ⊢" EQ First!"
+206 AVIEW
+207 RTN
+208 LBL 77
+@@@@ Set YWID
+209 RCL "YMAX"
+210 RCL- "YMIN"
+211 1
+212 RCL "ResY"
+213 -
+214 ÷
+215 STO "YWID"
+@@@@ Set YWID
+216 RCL "ULIM"
+217 RCL- "LLIM"
+218 RCL "ResX"
+219 1
+220 -
+221 ÷
+222 STO "XWID"
+@@@@ Draw stuff
+223 CLLCD
+224 CLMENU @@@@ Only needed on DM42
+225 EXITALL @@@@ Only needed on DM42
+226 FC? 83
+227 GTO 17
+@@@@ Doing an autoscale draw
+228 RCL "ResX"
+229 14
+230 ÷
+231 IP
+232 1
+233 -
+234 LSTO "I"
+235 LBL 15
+236 RCL "ResY"
+237 2
+238 ÷ @@@@ Yctr
+239 9
+240 -
+241 RCL "I"
+242 14
+243 × @@@@ X coord
+244 "@`px|~├~|xp`@"               @@@@ Draw up triangle
+245 AGRAPH
+246 "×∫π→•?├?•→π∫×"               @@@@ Draw down triangle
+247 X<>Y
+248 12
+249 +
+250 X<>Y
+251 AGRAPH
+252 DSE "I"                       @@@@ Loopity doopity do
+253 GTO 15
+254 GTO 20 @@@@ Jump past axis and grid drawing for autoscale redraw
+255 LBL 17
+@@@@ Draw X Axis
+256 RCL "STEP"
+257 X<0? @@@@ No axis if negative
+258 GTO 11
+259 0
+260 XEQ 56
+261 XEQ 58
+262 1
+263 -
+264 XEQ 58
+265 2
+266 +
+267 XEQ 58
+268 LBL 11
+@@@@ Draw X Grid
+269 RCL "STEP"
+270 X≤0?
+271 GTO 08 @@@@ no grid when STEP<=0
+272 RCL "XWID"
+273 10
+274 ×
+275 X>Y?
+276 GTO 08 @@@@ no grid when too small
+277 R↓
+278 RCL "ULIM"
+279 RCL÷ "STEP"
+280 IP
+281 RCL× "STEP"
+282 RCL+ "STEP"
+283 RCL "LLIM"
+284 RCL÷ "STEP"
+285 IP
+286 RCL× "STEP"
+287 RCL- "STEP"
+288 LBL 09
+289 ENTER
+290 XEQ 46
+291 XEQ 48
+292 R↓
+293 RCL+ "STEP"
+294 X<Y?
+295 GTO 09
+296 LBL 08
+@@@@ Draw Y Axis
+297 RCL "YSTP"
+298 X<0? @@@@ No axis if negative
+299 GTO 12
+300 0
+301 XEQ 46
+302 XEQ 48
+303 1
+304 -
+305 XEQ 48
+306 2
+307 +
+308 XEQ 48
+309 LBL 12
+@@@@ Draw Y Grid
+310 RCL "YSTP"
+311 X≤0?
+312 GTO 20 @@@@ no grid when STEP<=0
+313 RCL "YWID"
+314 -10
+315 ×
+316 X>Y?
+317 GTO 20 @@@@ no grid when too small
+318 R↓
+319 RCL "YMAX"
+320 RCL÷ "YSTP"
+321 IP
+322 RCL× "YSTP"
+323 RCL+ "YSTP"
+324 RCL "YMIN"
+325 RCL÷ "YSTP"
+326 IP
+327 RCL× "YSTP"
+328 RCL- "YSTP"
+329 LBL 21
+330 ENTER
+331 XEQ 56
+332 XEQ 58
+333 R↓
+334 RCL+ "YSTP"
+335 X<Y?
+336 GTO 21
+337 LBL 20
+@@@@ Set Alpha to our box
+338 "πππ"
+@@@@ Plot curve
+@@@@ Init YPMAX & YPMIN
+339 SF 82
+@@@@ Init LASTY
+340 0
+341 LSTO "LASTY"
+342 R↓
+@@@@ Loop across screen
+343 RCL "ResX"
+344 1000
+345 ÷
+346 1
+347 +
+348 LSTO "XICUR"
+349 LBL 41
+350 RCL "XICUR"
+351 IP
+352 XEQ 47
+353 STO IND "EqV"
+354 SF 25
+355 XEQ IND "EqP"
+356 FC?C 25
+357 GTO 29
+358 FC? 82
+359 GTO 43
+@@@@ Setup YPMIN & YPMAX
+360 LSTO "YPMAX"
+361 LSTO "YPMIN"
+362 CF 82
+363 LBL 43
+@@@@ Update YPMIN & YPMAX if required.
+364 RCL "YPMAX"
+365 X<>Y
+366 X>Y?
+367 LSTO "YPMAX"
+368 RCL "YPMIN"
+369 X<>Y
+370 X<Y?
+371 LSTO "YPMIN"
+372 FC? 83
+373 GTO 78
+@@@@ Draw autoscale progress bar
+374 RCL "ResY"
+375 2
+376 ÷
+377 1
+378 -
+379 RCL "XICUR"
+380 AGRAPH
+381 R↓
+382 R↓
+383 GTO 19
+384 LBL 78
+@@@@ If y is on screen, then draw it
+385 XEQ 56
+386 XEQ 55
+387 GTO 29
+@@@@ DRAW FAT PIXEL
+388 RCL "XICUR"
+389 XEQ 51 @@@ XICUR YICUR
+390 R↓
+@@@@ Do we draw lines?
+391 FS? 03
+392 GTO 19
+@@@@ Don't do lines for an autoscale draw
+393 FS? 83
+394 GTO 19
+@@@@ Do we have a last point?
+395 RCL "LASTY"
+396 X=0?
+397 GTO 19
+@@@@ Yep & Yep. We draw a line!
+398 X<>Y
+399 RCL "XICUR"  @@@@ xi  newy lasty
+400 XEQ 40
+401 LBL 19
+@@@@ Save last Y
+402 R↓
+403 LSTO "LASTY"
+404 GTO 42
+405 LBL 29 @@@@ Bad Y target
+406 0
+407 LSTO "LASTY"
+@@@@ Backend of loop
+408 LBL 42
+409 ISG "XICUR"
+410 GTO 41
+@@@@ Done with graph.
+@@@@ Setup zoom box
+411 10
+412 LSTO "FPZSPD"
+413 1
+414 LSTO "ZBTOP"
+415 LSTO "ZBLFT"
+416 RCL "ResY"
+417 LSTO "ZBBOT"
+418 RCL "ResX"
+419 LSTO "ZBRGT"
+@@@@ Do we redraw with autoscale?
+420 FS?C 83
+421 GTO 68
+@@@@ graph UI
+422 LBL 16
+423 RCL "FPZSPD"
+424 LSTO "CTR"
+425 LBL 52
+426 RCL "ZBRGT"
+427 RCL "CTR"
+428 +
+429 XEQ 48
+430 DSE "CTR"
+431 GTO 52
+432 RCL "FPZSPD"
+433 LSTO "CTR"
+434 LBL 53
+435 RCL "ZBBOT"
+436 RCL "CTR"
+437 +
+438 XEQ 58
+439 DSE "CTR"
+440 GTO 53
+441 RCL "FPZSPD"
+442 LSTO "CTR"
+443 LBL 54
+444 RCL "ZBTOP"
+445 RCL "CTR"
+446 -
+447 XEQ 58
+448 DSE "CTR"
+449 GTO 54
+450 RCL "FPZSPD"
+451 LSTO "CTR"
+452 LBL 59
+453 RCL "ZBLFT"
+454 RCL "CTR"
+455 -
+456 XEQ 48
+457 DSE "CTR"
+458 GTO 59
+459 LBL 44
+460 GETKEY1
+461 13
+462 X=Y? @@@@ 13ᴇNTER key
+463 GTO 73
+464 R↓
+465 17
+466 X=Y? @@@@ 24 Backspace key
+467 GTO 60
+468 R↓
+469 32
+470 X=Y? @@@@ - speed slow key
+471 GTO 66
+472 R↓
+473 37
+474 X=Y? @@@@ - speed fast key
+475 GTO 65
+476 R↓
+477 24
+478 X=Y? @@@@ 24 LEFT key
+479 GTO 61
+480 R↓
+481 26
+482 X=Y? @@@@ 26 RIGHT key
+483 GTO 62
+484 R↓
+485 20
+486 X=Y? @@@@ 20 TOP key
+487 GTO 63
+488 R↓
+489 30
+490 X=Y? @@@@ 30 BOTTOM key
+491 GTO 64
+492 R↓
+493 14
+494 X=Y? @@@@ 14 autoscale key
+495 GTO 68
+496 R↓
+497 22
+498 X=Y? @@@@ 22 zoom in key
+499 GTO 67
+500 R↓
+501 35
+502 X=Y? @@@@ 35 period. toggle dots/lines
+503 GTO 75
+504 R↓
+505 27
+506 X=Y? @@@@ 27 zoom out key
+507 GTO 69
+508 GTO 44 @@@@ Nothing matched get another key
+509 LBL 67 @@@@ 22 / zoom
+510 0.5
+511 ENTER
+512 ENTER
+513 XEQ 03
+514 XEQ 04
+515 GTO 07
+516 LBL 69 @@@@ 27 x zoom out
+517 2.0
+518 ENTER
+519 ENTER
+520 XEQ 03
+521 XEQ 04
+522 GTO 07
+523 LBL 68 @@@@ Autoscale Y
+524 1
+525 RCL "ZBLFT"
+526 -
+527 ABS
+528 RCL "ResX"
+529 RCL "ZBRGT"
+530 -
+531 ABS
+532 +
+533 X=0?
+534 GTO 14
+@@@@ Zoom box has been set
+535 RCL "ZBLFT"
+536 XEQ 47
+537 RCL "ZBRGT"
+538 XEQ 47
+539 STO "ULIM"
+540 X<>Y
+541 STO "LLIM"
+542 SF 83
+543 GTO 07
+544 LBL 14
+@@@@ No zoom box
+545 RCL "YPMAX"
+546 -5
+547 RCL× "YWID"
+548 +
+549 RCL "YPMIN"
+550 5
+551 RCL× "YWID"
+552 +
+553 STO "YMIN"
+554 X<>Y
+555 STO "YMAX"
+556 GTO 07
+557 LBL 75 @@@@ 35 toggle dots/lines
+558 FS?C 03
+559 GTO 07
+560 SF 03
+561 GTO 07
+562 LBL 65 @@@@ 37 + set speed fast
+563 10
+564 LSTO "FPZSPD"
+565 GTO 16
+566 LBL 66 @@@@ 32 - set speed slow
+567 1
+568 LSTO "FPZSPD"
+569 GTO 16
+570 LBL 61 @@@@ LEFT REDO
+571 RCL "ZBRGT"
+572 -2
+573 RCL× "FPZSPD"
+574 +
+575 RCL "FPZSPD"
+576 RCL+ "ZBLFT"
+577 X<Y?
+578 LSTO "ZBLFT"
+579 XEQ 47
+580 STO "ZLLIM"
+581 GTO 16
+582 LBL 62 @@@@ RIGHT REDO
+583 RCL "ZBLFT"
+584 2
+585 RCL× "FPZSPD"
+586 +
+587 RCL "FPZSPD"
+588 +/-
+589 RCL+ "ZBRGT"
+590 X>Y?
+591 LSTO "ZBRGT"
+592 XEQ 47
+593 STO "ZULIM"
+594 GTO 16
+595 LBL 63 @@@@ TOP REDO
+596 RCL "ZBBOT"
+597 -2
+598 RCL× "FPZSPD"
+599 + @@@@ Upper_limit
+600 RCL "FPZSPD"
+601 RCL+ "ZBTOP"         @@@ New_ZBTOP Lower_limit
+602 X<Y?
+603 LSTO "ZBTOP"
+604 GTO 16
+605 LBL 64 @@@@ BOT REDO
+606 RCL "ZBTOP"
+607 2
+608 RCL× "FPZSPD"
+609 + @@@@ Lower_limit
+610 RCL "FPZSPD"
+611 +/-
+612 RCL+ "ZBBOT"         @@@ New_ZBBOT Lower_limit
+613 X>Y?
+614 LSTO "ZBBOT"
+615 GTO 16
+616 LBL 73
+617 RCL "ZBTOP"
+618 XEQ 57
+619 RCL "ZBBOT"
+620 XEQ 57
+621 STO "YMIN"
+622 R↓
+623 STO "YMAX"
+624 RCL "ZBRGT"
+625 XEQ 47
+626 RCL "ZBLFT"
+627 XEQ 47
+628 STO "LLIM"
+629 X<>Y
+630 STO "ULIM"
+631 GTO 07
+632 LBL 60
+633 RTN
+634 LBL 40 @@@@ Draw Line
+635 FUNC 00
+@@@@ xi newy lasty
+636 LSTO "XNUE"
+637 R↓ @@@@ yn yo
+638 RCL ST Y @@@@ yo yn yo
+639 RCL- ST Y @@@@ yo-yn yn yo
+640 ABS @@@@ |yo-yn| yn yo
+641 3
+642 X>Y?
+643 RTN @@@@ Pts too close, no line to draw
+@@@@ We are drawing a line!
+644 R↓
+645 R↓ @@@@ yn yo
+646 LSTO "YNUE"
+647 X<>Y
+648 LSTO "YOLD"     @@@@ yo yn
+649 +
+650 2
+651 ÷
+652 IP
+653 LSTO "YCTR"
+@@@@ CTR -> OLD Y
+654 RCL "XNUE"
+655 1
+656 -
+657 RCL "YOLD"
+658 RCL "YCTR"
+659 XEQ 70
+@@@@ CTR -> NEW Y
+660 R↓
+661 R↓
+662 R↓
+663 RCL "XNUE"
+664 RCL "YNUE"
+665 RCL "YCTR"
+666 XEQ 70
+667 R↓
+668 R↓
+669 R↓
+670 RTN
+671 LBL 70 @@@@ Draw Fat, Vertical Line Segment Ystart Yend X . Yend already has a fat point drawn.
+672 FUNC 00
+673 X<Y?
+674 GTO 71
+@@@@ Line going up
+675 1
+676 STO- ST T
+677 R↓ @@@@ Ystart Yend X-1
+678 1
+679 STO- ST Z
+680 R↓ @@@@ Ystart Yend-1 X-1
+681 3
+682 - @@@@ Ystart-3 Yend+1 X-1
+683 LBL 72 @@@@ ycur Yend-1 X-1
+684 RCL ST Z @@@@ X-1 ycur Yend-1 X-1
+685 AGRAPH
+686 R↓ @@@@ ycur Yend-1 X-1
+687 3
+688 - @@@@ ycur(updated) Yend-1 X-1
+689 X>Y?
+690 GTO 72
+691 RTN
+692 LBL 71
+@@@@ Line going down
+693 1
+694 STO- ST T
+695 R↓ @@@@ Ystart Yend X-1
+696 1
+697 STO- ST Z
+698 R↓ @@@@ Ystart Yend-1 X-1
+699 LBL 18 @@@@ Ycur Yend-1 X-1
+700 RCL ST Z @@@@ X-1 Ycur Yend-1 X-1
+701 AGRAPH
+702 R↓ @@@@ yc yn+1 xn-1
+703 3
+704 + @@@@ yc yn+1 xn-1
+705 X<Y?
+706 GTO 18
+707 RTN
+708 LBL 51 @@@@ Draw BIG Pix (assumes Alpha is set)
+709 FUNC 00
+710 1
+711 -
+712 X<>Y
+713 1
+714 -
+715 X<>Y
+716 AGRAPH
+717 RTN
+718 LBL 58 @@@@ HLINE
+719 FUNC 00
+720 XEQ 55
+721 GTO 27
+722 +/-
+723 1
+724 PIXEL
+725 LBL 27
+726 RTN
+727 LBL 48 @@@@ VLINE
+728 FUNC 00
+729 XEQ 45
+730 GTO 28
+731 +/-
+732 1
+733 X<>Y
+734 PIXEL
+735 LBL 28
+736 RTN
+737 LBL 45 @@@@ X Out Of Range
+738 FUNC 00
+739 X≤0?
+740 RTNYES
+741 RCL "ResX"
+742 X<Y?
+743 RTNYES
+744 RTNNO
+745 LBL 55 @@@@ Y Out Of Range
+746 FUNC 00
+747 X≤0?
+748 RTNYES
+749 RCL "ResY"
+750 X<Y?
+751 RTNYES
+752 RTNNO
+753 LBL 46 @@@@ XR->XI
+754 FUNC 11
+755 RCL- "LLIM"
+756 RCL÷ "XWID"
+757 1
+758 +
+759 RTN
+760 LBL 47 @@@@ XI->XR
+761 FUNC 11
+762 1
+763 -
+764 RCL× "XWID"
+765 RCL+ "LLIM"
+766 RTN
+767 LBL 56 @@@@ YR->YI
+768 FUNC 11
+769 RCL- "YMAX"
+770 RCL÷ "YWID"
+771 1
+772 +
+773 RTN
+774 LBL 57 @@@@ YI->YR
+775 FUNC 11
+776 1
+777 -
+778 RCL× "YWID"
+779 RCL+ "YMAX"
+780 RTN
+781 LBL 39 @@@@ Swap rng & box
+782 FUNC 00
+783 SF 25
+784 RCL "ZLLIM"
+785 FC?C 25
+786 GTO 38
+787 SF 25
+788 RCL "ZULIM"
+789 FC?C 25
+790 GTO 38
+791 SF 25
+792 RCL "LLIM"
+793 FC?C 25
+794 GTO 38
+795 SF 25
+796 RCL "ULIM"
+797 FC?C 25
+798 GTO 38
+799 STO "ZULIM"
+800 R↓
+801 STO "ZLLIM"
+802 R↓
+803 STO "ULIM"
+804 X<>Y
+805 STO "LLIM"
+806 "XMIN: "
+807 ARCL ST X
+808 R↓
+809 ⊢"␊XMAX: "
+810 ARCL ST X
+811 R↓
+812 AVIEW
+813 RTN
+814 LBL 38
+815 "ERR: Range or "
+816 "├ unset"
+817 AVIEW
+818 RTN
+819 LBL 74 @@@@ Set any unset global variables to defaults
+820 10
+821 SF 25
+822 RCL "ULIM"
+823 FC?C 25
+824 STO "ULIM"
+825 -10
+826 SF 25
+827 RCL "LLIM"
+828 FC?C 25
+829 STO "LLIM"
+830 6
+831 SF 25
+832 RCL "YMAX"
+833 FC?C 25
+834 STO "YMAX"
+835 -6
+836 SF 25
+837 RCL "YMIN"
+838 FC?C 25
+839 STO "YMIN"
+840 0
+841 SF 25
+842 RCL "YSTP"
+843 FC?C 25
+844 STO "YSTP"
+845 0
+846 SF 25
+847 RCL "STEP"
+848 FC?C 25
+849 STO "STEP"
+850 RTN
+851 END

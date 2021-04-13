@@ -1,0 +1,24 @@
+Error [58, 42]! Code: '42 FUNC 00'; Message: unvalid command
+Error [105, 86]! Code: '86 FUNC 00'; Message: unvalid command
+Error [152, 130]! Code: '130 FUNC 00'; Message: unvalid command
+Error [189, 163]! Code: '163 FUNC 04'; Message: unvalid command
+Error [193, 167]! Code: '167 FUNC 01'; Message: unvalid command
+Error [519, 460]! Code: '460 GETKEY1'; Message: unvalid command
+Error [696, 635]! Code: '635 FUNC 00'; Message: unvalid command
+Error [737, 672]! Code: '672 FUNC 00'; Message: unvalid command
+Error [776, 709]! Code: '709 FUNC 00'; Message: unvalid command
+Error [786, 719]! Code: '719 FUNC 00'; Message: unvalid command
+Error [795, 728]! Code: '728 FUNC 00'; Message: unvalid command
+Error [805, 738]! Code: '738 FUNC 00'; Message: unvalid command
+Error [807, 740]! Code: '740 RTNYES'; Message: unvalid command
+Error [810, 743]! Code: '743 RTNYES'; Message: unvalid command
+Error [811, 744]! Code: '744 RTNNO'; Message: unvalid command
+Error [813, 746]! Code: '746 FUNC 00'; Message: unvalid command
+Error [815, 748]! Code: '748 RTNYES'; Message: unvalid command
+Error [818, 751]! Code: '751 RTNYES'; Message: unvalid command
+Error [819, 752]! Code: '752 RTNNO'; Message: unvalid command
+Error [821, 754]! Code: '754 FUNC 11'; Message: unvalid command
+Error [828, 761]! Code: '761 FUNC 11'; Message: unvalid command
+Error [835, 768]! Code: '768 FUNC 11'; Message: unvalid command
+Error [842, 775]! Code: '775 FUNC 11'; Message: unvalid command
+Error [849, 782]! Code: '782 FUNC 00'; Message: unvalid command
