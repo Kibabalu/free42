@@ -5,6 +5,6 @@
 - RC: RC low pass computations
 - lc: LC resonator computations
 - f2lmbd: computation of frequency and wave length
-- rparr: computation of parallel resistors in all dierections
-- ZPARZ: Resulting impedance of two parallel impedances (input from stack)
+- rparr: parallel resistors computations
+- ZPARZ: Resulting impedance of two parallel impedances from stack registers X and Y
 - and some stuff more
