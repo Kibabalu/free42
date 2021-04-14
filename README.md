@@ -1,4 +1,4 @@
-### Programs for HP-42s, DM42 and free42
+# Programs for HP-42s, DM42 and free42
 
 ## m2uV: Conversion from/to power in dBm to/from Voltage in dbuV
   Variables:
