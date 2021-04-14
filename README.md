@@ -3,7 +3,7 @@
 ### m2uV: Conversion from/to power in dBm to/from Voltage in dbuV
   Variables: Power in dBm, voltage in dBuV and impedance in Ohm. For any of them can be solved
 ### m2Vrms: Conversion from/to power in dBm to/from Vrms
-  variables: Power in dBm, voltage in Vrms, impedance in Ohm, For any of them can be solved
+  Variables: Power in dBm, voltage in Vrms, impedance in Ohm, For any of them can be solved
 ### RC: RC low pass step response computations
   Variables: Voltage V1 before step in V, voltage V2 after infinit time in V, instantanious Vt voltage at time t in V, resistance R in Ohm, capacitance C in F and time t in s. For any of them can be solved
 ### lc: LC resonator computations
