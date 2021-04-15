@@ -9,7 +9,9 @@
 ### lc: LC resonator computations
   Variables: Inductance L in H, capacitance C in F and resonant frequency f0 in Hz. For any of them can be solved
 ### f2lmbd: computation of frequency and wave length
-  Frequency f in Hz, wavelength lmdd in m and velocity factor VF. For any of them can be solved
+  Variables: Frequency f in Hz, wavelength lmdd in m and velocity factor VF. For any of them can be solved
+### SKIN: Skin effect computations
+  Variables: Permeability µ in H/m, frequency f in Hz, conductivity sigma in S/m, skin depth delta in m
 ### rparr: parallel resistors computations
   Variables: 1st resistor R1 in Ohm, 2nd resistor R2 in Ohm and resulting resistor R in Ohm. For any of them can be solved
 

@@ -1,0 +1,54 @@
+@ SIL: Surge Impedance of a Line
+@
+@ Rs Serial resistance per unit length in Ohm/m
+@ Gp Parallel conductance per unit length in 1/(Ohm*m)
+@ Ls serial inductance per unit length in H/m
+@ Cp Parallel capacitance per unit length in F/m
+@ f  Frequncy in Hz
+@ Zl Surge Impedance 
+@
+@ Frank Kirschbaum, frank.kirschbaumr@gmail.com
+@
+@ 2021-04-14: Initial version -- not tested yet!!!!
+@
+00 { 112-Byte Prgm }
+01 LBL "SIL"
+02 MVAR "Rs"
+03 MVAR "Gp"
+04 MVAR "Ls"
+05 MVAR "Cp"
+06 MVAR "f"
+07 MVAR "Zl"
+08 VARMENU "SIL"
+
+09 CF 21 @ continue program execution after a VIEW instruction
+10 REALRES @ calculate real results only
+11 STOP
+12 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
+13 PGMSLV ".SIL"         @ specify solver routine
+14 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
+15 VIEW IND "CONTROL"   @ View the solution
+16 GTO "SIL"             @ return to start
+
+17 LBL ".SIL"            @ function to solve
+18 RCL "Ls"
+19 RCL× "f"
+20 2
+20 ×
+20 PI
+20 ×
+20 RCL "Rs"
+20 +
+20 RCL "Cp"
+20 RCL× "f"
+20 2
+20 ×
+20 PI
+20 ×
+20 RCL "Gp"
+20 +
+20 ÷
+20 SQRT
+21 RCL- "Zl"
+
+32 END
