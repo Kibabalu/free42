@@ -8,6 +8,7 @@
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
 @ 2021-04-15: Initial version
+@ 2021-04-16: final version
 @
 00 { 155-Byte Prgm }
 01 LBL "SKIN"
@@ -28,14 +29,14 @@
 
 15 LBL ".SKIN"            @ function to solve
 
-16 RCL "µr"
+16 RCL "µr" @ default for copper
 17 X≤0?
 18 0.999991
 19 STO "µr"
 
-20 RCL "rho"
+20 RCL "rho" @ default for copper
 21 X≤0?
-22 1.678E-8
+22 1.678ᴇ-8
 23 STO "rho"
 
 24 PI
