@@ -2,14 +2,14 @@
 @
 @ µr relative permeability in H/m
 @ f frequency in Hz
-@ rhoa = resistivity in S/m
+@ rho = spec. resistivity in S/m
 @ δelta skin depth in m
 @
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
 @ 2021-04-15: Initial version
 @
-00 { 117-Byte Prgm }
+00 { 155-Byte Prgm }
 01 LBL "SKIN"
 02 MVAR "µr"
 03 MVAR "f"
@@ -27,16 +27,27 @@
 14 GTO "SKIN"             @ return to start
 
 15 LBL ".SKIN"            @ function to solve
-16 PI
-17 RCL× "f"
-18 4ᴇ-7
-19 ×
-20 PI
-21 ×
-22 RCL× "µr"
-24 1/X
-23 RCL× "rho"
-25 SQRT
-26 RCL- "delta"
 
-27 END
+16 RCL "µr"
+17 X≤0?
+18 0.999991
+19 STO "µr"
+
+20 RCL "rho"
+21 X≤0?
+22 1.678E-8
+23 STO "rho"
+
+24 PI
+25 RCL× "f"
+26 4ᴇ-7
+27 ×
+28 PI
+29 ×
+30 RCL× "µr"
+31 1/X
+32 RCL× "rho"
+33 SQRT
+34 RCL- "delta"
+
+35 END
