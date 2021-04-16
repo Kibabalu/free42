@@ -24,10 +24,7 @@
 13 GTO "m2uV"           @ return to start
 
 14 LBL ".m2uV"          @ function to solve
-20 RCL "Z0"             @ default for Z0
-21 X≤0?
-22 50
-23 STO "Z0"
+XEQ 00
 15 RCL "Z0"
 16 SQRT
 17 LOG
@@ -38,5 +35,12 @@
 22 RCL "dBm"
 23 +
 24 RCL- "dBuV"
+RTN 
+LBL 00
+20 RCL "Z0"
+21 X≤0?
+22 50                   @ default for Z0
+23 STO "Z0"
+RTN
 
 25 END
