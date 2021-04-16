@@ -1,8 +1,8 @@
 @ SKIN: Skin effect computations
 @
-@ µr relative permeability in Ohm*m
+@ µr relative permeability
 @ f frequency in Hz
-@ rho = spec. resistivity in S/m
+@ rho = spec. resistivity in Ohm*m
 @ δelta skin depth in m
 @
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
