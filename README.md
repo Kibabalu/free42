@@ -11,7 +11,7 @@
 ### f2lmbd: computation of frequency and wave length
   Variables: Frequency f in Hz, wavelength lmdd in m and velocity factor VF. For any of them can be solved
 ### SKIN: Skin effect computations
-  Variables: Permeability µ in H/m, frequency f in Hz, resitivity rho in Ohm*m, skin depth delta in m
+  Variables: relative Permeability µr in 1, frequency f in Hz, resitivity rho in Ohm*m, skin depth delta in m
 ### rparr: parallel resistors computations
   Variables: 1st resistor R1 in Ohm, 2nd resistor R2 in Ohm and resulting resistor R in Ohm. For any of them can be solved
 
