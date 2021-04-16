@@ -8,7 +8,7 @@
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
 @ 2021-04-15: Initial version
-@ 2021-04-16: final version
+@ 2021-04-16: Final version
 @
 00 { 161-Byte Prgm }
 01 LBL "SKIN"
@@ -18,8 +18,8 @@
 05 MVAR "delta"
 06 VARMENU "SKIN"
 
-07 CF 21 @ continue program execution after a VIEW instruction
-08 REALRES @ calculate real results only
+07 CF 21                @ continue program execution after a VIEW instruction
+08 REALRES              @ calculate real results only
 09 STOP
 10 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
 11 PGMSLV ".SKIN"       @ specify solver routine
@@ -28,7 +28,7 @@
 14 GTO "SKIN"           @ return to start
 
 15 LBL ".SKIN"          @ function to solve
-16 XEQ 00 @ default values
+16 XEQ 00               @ call subroutine for default values
 17 PI
 18 RCL× "f"
 19 4ᴇ-7
@@ -41,14 +41,14 @@
 26 SQRT
 27 RCL- "delta"
 28 RTN
-29 LBL 00 @ default values
+29 LBL 00               @ subroutine for default values
 30 RCL "µr"
 31 X≤0?
-32 0.999991 @ default for copper
+32 0.999991             @ default for copper
 33 STO "µr"
 34 RCL "rho"
 35 X≤0?
-36 1.678ᴇ-8 @ default for copper
+36 1.678ᴇ-8             @ default for copper
 37 STO "rho"
 38 RTN
 39 END

@@ -7,6 +7,7 @@
 @
 @ Frank Kirschbaum, frank.kirschbaum@gmail.com
 @ 2021-04-10: Initial version
+@ 2021-04-16: Final version
 @
 00 { 137-Byte Prgm }
 01 LBL "m2Vrms"
@@ -15,8 +16,8 @@
 04 MVAR "Z0"
 05 VARMENU "m2Vrms"
 
-06 CF 21 @ continue program execution after a VIEW instruction
-07 REALRES @ calculate real results only
+06 CF 21                @ continue program execution after a VIEW instruction
+07 REALRES              @ calculate real results only
 08 STOP
 09 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
 10 PGMSLV ".m2Vrms"     @ specify solver routine
@@ -25,7 +26,7 @@
 13 GTO "m2Vrms"         @ return to start
 
 14 LBL ".m2Vrms"        @ function to solve
-15 XEQ 00               @ default values
+15 XEQ 00               @ call subroutine for default values
 16 RCL "dBm"
 17 30
 18 -
@@ -37,10 +38,10 @@
 24 ×
 25 RCL- "Vrms"
 26 RTN
-27 LBL 00 @ default values
+27 LBL 00               @ subroutine for default values
 28 RCL "Z0"
 29 X≤0?
-30 50 @ default for Z0
+30 50                   @ default for Z0
 31 STO "Z0"
 32 RTN
 
