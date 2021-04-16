@@ -1,19 +1,19 @@
 @ SKIN: Skin effect computations
 @
-@ µ permeability in H/m
+@ µr relative permeability in H/m
 @ f frequency in Hz
-@ sigma = conductivity in S/m
+@ rhoa = resistivity in S/m
 @ δelta skin depth in m
 @
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
 @ 2021-04-15: Initial version
 @
-00 { 111-Byte Prgm }
+00 { 117-Byte Prgm }
 01 LBL "SKIN"
-02 MVAR "µ"
+02 MVAR "µr"
 03 MVAR "f"
-04 MVAR "sigma"
+04 MVAR "rho"
 05 MVAR "delta"
 06 VARMENU "SKIN"
 
@@ -29,10 +29,14 @@
 15 LBL ".SKIN"            @ function to solve
 16 PI
 17 RCL× "f"
-18 RCL× "µ"
-19 RCL× "sigma"
-20 1/X
-21 SQRT
-22 RCL- "delta"
+18 4ᴇ-7
+19 ×
+20 PI
+21 ×
+22 RCL× "µr"
+24 1/X
+23 RCL× "rho"
+25 SQRT
+26 RCL- "delta"
 
-23 END
+27 END
