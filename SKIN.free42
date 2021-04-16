@@ -18,27 +18,24 @@
 05 MVAR "delta"
 06 VARMENU "SKIN"
 
-07 CF 21 @ continue program execution after a VIEW instruction
-08 REALRES @ calculate real results only
+07 CF 21                @ continue program execution after a VIEW instruction
+08 REALRES              @ calculate real results only
 09 STOP
 10 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
-11 PGMSLV ".SKIN"         @ specify solver routine
+11 PGMSLV ".SKIN"       @ specify solver routine
 12 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
 13 VIEW IND "CONTROL"   @ View the solution
-14 GTO "SKIN"             @ return to start
+14 GTO "SKIN"           @ return to start
 
-15 LBL ".SKIN"            @ function to solve
-
-16 RCL "µr" @ default for copper
+15 LBL ".SKIN"          @ function to solve
+16 RCL "µr"             
 17 X≤0?
-18 0.999991
+18 0.999991             @ default for copper
 19 STO "µr"
-
-20 RCL "rho" @ default for copper
+20 RCL "rho"            
 21 X≤0?
-22 1.678ᴇ-8
+22 1.678ᴇ-8             @ default for copper
 23 STO "rho"
-
 24 PI
 25 RCL× "f"
 26 4ᴇ-7

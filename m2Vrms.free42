@@ -25,9 +25,9 @@
 13 GTO "m2Vrms"         @ return to start
 
 14 LBL ".m2Vrms"        @ function to solve
-20 RCL "Z0" @ default for Z0
+20 RCL "Z0"
 21 X≤0?
-22 50
+22 50                   @ default for Z0
 23 STO "Z0"
 15 RCL "dBm"
 16 30
