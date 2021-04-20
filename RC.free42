@@ -1,7 +1,7 @@
 @ RC: Computing step response of an RC low pass
 @
 @ Vt voltage at time t in V
-@ V1 initial Voltage at the beginning of the step in V
+@ V1 initial Voltage at the beginning of the step at time 0s in V
 @ V2 Voltage after an infinite time in V
 @ R Resistance in Ohm
 @ C Capacitance in F
