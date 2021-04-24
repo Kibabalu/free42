@@ -19,7 +19,6 @@
 06 VARMENU "SKIN"
 
 07 CF 21                @ continue program execution after a VIEW instruction
-08 REALRES              @ calculate real results only
 09 STOP
 10 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
 11 PGMSLV ".SKIN"       @ specify solver routine

@@ -22,7 +22,6 @@
 08 VARMENU "SIL"
 
 09 CF 21 @ continue program execution after a VIEW instruction
-10 REALRES @ calculate real results only
 11 STOP
 12 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
 13 PGMSLV ".SIL"         @ specify solver routine

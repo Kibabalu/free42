@@ -1,6 +1,6 @@
 # Programs for HP-42s, DM42 and free42
 
-### m2uV: Conversion from/to power in dBm to/from Voltage in dbuV
+#### m2uV: Conversion from/to power in dBm to/from Voltage in dbuV
 Variables:
 
  - Power in dBm,
@@ -8,7 +8,7 @@ Variables:
  - impedance in Ohm.
 
 For any of them can be solved  
-### m2Vrms: Conversion from/to power in dBm to/from Vrms
+#### m2Vrms: Conversion from/to power in dBm to/from Vrms
 Variables:
 
  - Power in dBm,
@@ -16,7 +16,7 @@ Variables:
  - impedance in Ohm.
 
 For any of them can be solved  
-### RC: RC low pass step response computations
+#### RC: RC low pass step response computations
 Variables:
 
  - Voltage V1 before step in V,
@@ -27,7 +27,7 @@ Variables:
  - time t in s.
 
 For any of them can be solved
-### lc: LC resonator computations
+#### lc: LC resonator computations
 Variables:
 
  - Inductance L in H,
@@ -35,7 +35,7 @@ Variables:
  - resonant frequency f0 in Hz.
 
 For any of them can be solved
-### f2lmbd: computation of frequency and wave length
+#### f2lmbd: computation of frequency and wave length
 Variables:
 
  - Frequency f in Hz, 
@@ -43,7 +43,7 @@ Variables:
  - velocity factor VF.
 
 For any of them can be solved
-### SKIN: Skin effect computations
+#### SKIN: Skin effect computations
 Variables:
 
  - relative Permeability µr in 1,
@@ -52,7 +52,7 @@ Variables:
  - skin depth delta in m
 
 For any of them can be solved
-### rparr: parallel resistors computations
+#### rparr: parallel resistors computations
 Variables:
 
  - 1st resistor R1 in Ohm,
@@ -61,9 +61,9 @@ Variables:
 
 For any of them can be solved
 
-### ZPARZ: Resulting impedance of two parallel impedances from stack registers X and Y
+#### ZPARZ: Resulting impedance of two parallel impedances from stack registers X and Y
  - X register: 1st impedance Z1 in Ohm,
  - Y register: 2nd impdance Z2 in Ohm,
  - resulting impedance Z  --> X register
 
-### and some stuff more
+#### and some stuff more
