@@ -1,0 +1,105 @@
+@ Coax Cable Attenuation
+@
+@ f Frequency in Hz
+@ l cable length in m
+@ D attenuation in dB
+@
+@ D * 100m / l = beta1 + beta2 * f + beta3 * sqrt(f)
+@
+@ cable data from https://www.w4rp.com/ref/coax.html
+@
+@ table for least square computation:
+@ 1 f sqrt(f) D_RG-58 D_RG-213
+@
+@ 1 1ᴇ6 1ᴇ3 1.3123 0.65617
+@ 1 10ᴇ6 3.1623ᴇ3 4.5932 1.9685
+@ 1 50ᴇ6 7.0711ᴇ3 10.827 5.2493
+@ 1 100ᴇ6 10ᴇ3 16.076 7.2178
+@ 1 200ᴇ6 14.142ᴇ3 23,95 10,827
+@ 1 400ᴇ6 20ᴇ3 36.745 15.748
+@ 1 700ᴇ6 26.458ᴇ3 55.446 21,654
+@ 1 900ᴇ6 30ᴇ3 65.945 25.262
+@ 1 1ᴇ9 31.623ᴇ3 70.538 27.231
+@
+@ example python code for the computation of the beta1, beta2 and beta3 for RG-58 (for the others ist is similar):
+@ import numpy as np
+@ X = np.matrix('1 1ᴇ6 1ᴇ3; 1 10ᴇ6 3.1623; 1 50ᴇ6 7.0711ᴇ3; 1 100ᴇ6 10ᴇ3; 1 200ᴇ6 14.142ᴇ3; 1 400ᴇ6 20ᴇ3; 1 700ᴇ6 26.458ᴇ3; 1 900ᴇ6 30e3; 1 1e9 31.623e3')
+@ y = np.matrix('1.3123; 4.5932; 10.827; 16.076; 23.95; 36.745; 55.446; 65.945; 70.538')
+@ beta = np.linalg.lstsq(X, y, rcond=None)[0]
+@
+@ Frank Kirschbaum, frank.kirschbaumr@gmail.com
+@ 2021-05-16: Initial version
+@
+00 { 320-Byte Prgm }
+01 LBL "CoaxD"
+
+02 "RG58"               @ main Menu: choice cable type (RG58 and RG213 so far)
+03 KEY 1 XEQ "RG58"
+04 "RG213"
+05 KEY 2 XEQ "RG213"
+06 MENU
+07 STOP
+
+08 LBL "RG58"           @ routine for RG-58 cable
+09 MVAR "f"
+10 MVAR "l"
+11 MVAR "D"
+12 VARMENU "RG58"
+
+13 CF 21 @ continue program execution after a VIEW instruction
+14 STOP
+15 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
+16 PGMSLV ".RG58"       @ specify solver routine
+17 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
+18 VIEW IND "CONTROL"   @ View the solution
+19 GTO "RG58"           @ return to start
+
+20 LBL ".RG58"          @ function to be solved for RG-58
+21 2.30215057           @ k1
+22 ENTER
+23 3.78507622ᴇ-8        @ k2
+24 RCL× "f"
+25 +
+26 RCL "f"
+27 SQRT
+28 9.80038603ᴇ-4        @ k3
+29 ×
+30 +
+31 100
+32 ÷
+33 RCL× "l"
+34 RCL- "D"
+35 RTN
+
+36 LBL "RG213"          @ Routine for RG-213 cable
+37 MVAR "f"
+38 MVAR "l"
+39 MVAR "D"
+40 VARMENU "RG213"
+
+41 CF 21                @ continue program execution after a VIEW instruction
+42 STOP
+43 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
+44 PGMSLV ".RG213"      @ specify solver routine
+45 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
+46 VIEW IND "CONTROL"   @ View the solution
+47 GTO "RG213"          @ return to start
+
+48 LBL ".RG213"         @ function to be solved for RG-213
+49 9.95992882ᴇ-1        @ k1
+50 ENTER
+51 8.62826348ᴇ-9        @ k2
+52 RCL× "f"
+53 +
+54 RCL "f"
+55 SQRT
+56 5.54894937ᴇ-4        @ k3
+57 ×
+58 +
+59 100
+60 ÷
+61 RCL× "l"
+62 RCL- "D"
+63 RTN
+
+64 END

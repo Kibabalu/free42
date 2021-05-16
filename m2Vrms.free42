@@ -9,7 +9,7 @@
 @ 2021-04-10: Initial version
 @ 2021-04-16: Final version
 @
-00 { 137-Byte Prgm }
+00 { 135-Byte Prgm }
 01 LBL "m2Vrms"
 02 MVAR "dBm"
 03 MVAR "Vrms"
