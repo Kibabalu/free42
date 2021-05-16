@@ -1,5 +1,13 @@
 # Programs for HP-42s, DM42 and free42
 
+#### CoaxD: Coax cable attenuation (RG-58 and RG-213)
+Variables:
+
+ - frequency in Hz,
+ - length in m and
+ - damping in dB.
+
+For any of them can be solved  
 #### m2uV: Conversion from/to power in dBm to/from Voltage in dbuV
 Variables:
 
