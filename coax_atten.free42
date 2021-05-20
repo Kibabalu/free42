@@ -33,6 +33,7 @@
 00 { 320-Byte Prgm }
 01 LBL "CoaxD"
 
+CLMENU
 02 "RG58"               @ main Menu: choice cable type (RG58 and RG213 so far)
 03 KEY 1 XEQ "RG58"
 04 "RG213"
