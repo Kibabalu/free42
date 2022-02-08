@@ -10,7 +10,7 @@
 @ 2021-04-15: Initial version
 @ 2021-04-16: Final version
 @
-00 { 159-Byte Prgm }
+00 { 161-Byte Prgm }
 01 LBL "SKIN"
 02 MVAR "µr"
 03 MVAR "f"
@@ -19,35 +19,36 @@
 06 VARMENU "SKIN"
 
 07 CF 21 @ continue program execution after a VIEW instruction
-08 STOP
-09 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
-10 PGMSLV ".SKIN"       @ specify solver routine
-11 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
-12 VIEW IND "CONTROL"   @ View the solution
-13 GTO "SKIN"           @ return to start
+08 REALRES @ calculate real results only
+09 STOP
+10 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
+11 PGMSLV ".SKIN"       @ specify solver routine
+12 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
+13 VIEW IND "CONTROL"   @ View the solution
+14 GTO "SKIN"           @ return to start
 
-14 LBL ".SKIN"          @ function to solve
-15 XEQ 00 @ call subroutine for default values
-16 PI
-17 RCL× "f"
-18 4ᴇ-7
-19 ×
-20 PI
-21 ×
-22 RCL× "µr"
-23 1/X
-24 RCL× "rho"
-25 SQRT
-26 RCL- "delta"
-27 RTN
-28 LBL 00 @ subroutine for default values
-29 RCL "µr"
-30 X≤0?
-31 0.999991 @ default for copper
-32 STO "µr"
-33 RCL "rho"
-34 X≤0?
-35 1.678ᴇ-8 @ default for copper
-36 STO "rho"
-37 RTN
-38 END
+15 LBL ".SKIN"          @ function to solve
+16 XEQ 00 @ call subroutine for default values
+17 PI
+18 RCL× "f"
+19 4ᴇ-7
+20 ×
+21 PI
+22 ×
+23 RCL× "µr"
+24 1/X
+25 RCL× "rho"
+26 SQRT
+27 RCL- "delta"
+28 RTN
+29 LBL 00 @ subroutine for default values
+30 RCL "µr"
+31 X≤0?
+32 0.999991 @ default for copper
+33 STO "µr"
+34 RCL "rho"
+35 X≤0?
+36 1.678ᴇ-8 @ default for copper
+37 STO "rho"
+38 RTN
+39 END
