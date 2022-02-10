@@ -9,9 +9,8 @@
 @ Default value for the trace height is 35um
 @
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
-@ 2022-02-08: Initial version
 @
-00 { 427-Byte Prgm }
+00 { 439-Byte Prgm }
 01 LBL "Trace"
 
 02 CLMENU
@@ -29,7 +28,7 @@
 13 MVAR "height"
 14 VARMENU "extern"
 
-15 CF 21                @ continue program execution after a VIEW instruction
+15 CF 21 @ continue program execution after a VIEW instruction
 16 STOP
 17 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
 18 PGMSLV ".extern"        @ specify solver routine
@@ -38,7 +37,7 @@
 21 GTO "extern"            @ return to start
 
 22 LBL ".extern"           @ function to be solved for externernal traces
-23 XEQ 00               @ call subroutine for default values
+23 XEQ 00 @ call subroutine for default values
 24 RCL "width"
 25 39370.07874
 26 ×
@@ -63,7 +62,7 @@
 44 MVAR "height"
 45 VARMENU "intern"
 
-46 CF 21                @ continue program execution after a VIEW instruction
+46 CF 21 @ continue program execution after a VIEW instruction
 47 STOP
 48 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
 49 PGMSLV ".intern"        @ specify solver routine
@@ -72,7 +71,7 @@
 52 GTO "intern"            @ return to start
 
 53 LBL ".intern"           @ function to be solved for internernal traces
-54 XEQ 00               @ call subroutine for default values
+54 XEQ 00 @ call subroutine for default values
 55 RCL "width"
 56 39370.07874
 57 ×
@@ -90,11 +89,15 @@
 69 RCL- "IMax"
 70 RTN
 
-71 LBL 00               @ subroutine for default values
+71 LBL 00 @ subroutine for default values
 72 RCL "height"
 73 X≤0?
-74 0.35ᴇ-6              @ default track height of 35um
+74 0.35ᴇ-6 @ default track height of 35um
 75 STO "height"
-76 RTN
+76 RCL "dT"
+77 X≤0?
+78 10 @ default temperature rise
+79 STO "dT"
+80 RTN
 
-77 END
+81 END
