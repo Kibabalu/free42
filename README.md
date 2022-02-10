@@ -1,5 +1,16 @@
 # Programs for HP-42s, DM42 and free42
 
+#### Trace: PCB trace computations according IPC-2221 standard
+
+variables:
+
+- maximum trace current IMax in A,
+- allowed temperature rise dT in K (default value 10K),
+- trace width in m
+- trace height in m (default value 35um)
+
+For any of them can be solved
+
 #### CoaxD: Coax cable attenuation (RG-58 and RG-213)
 
 Variables:
@@ -89,12 +100,6 @@ For any of them can be solved
 - X register: 1st impedance Z1 in Ohm,
 - Y register: 2nd impdance Z2 in Ohm,
 - resulting impedance Z  --> X register
-
-#### Trace: PCB trace computations according IPC-2221 standard 
-
-- maximum trace current IMax in A,
-- allowed temperature rise dT in K (default value 10K),
-- trace width in m
-- trace height in m (default value 35um)
+-
 
 #### and some stuff more
