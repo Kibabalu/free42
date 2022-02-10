@@ -2,6 +2,7 @@
 @
 @ internernal traces : I = 0.024 x dT^0.44 x A^0.725
 @ externernal traces: I = 0.048 x dT^0.44 x A^0.725
+@ Resistance = Resistivity*Length/Area*(1 + (Temp_Co*(Temp - 25))
 @
 @ The formulas are defined for the units A, K and mil. The programm
 @ takes and gives the metric unit m instead of mil!
@@ -11,7 +12,7 @@
 @
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
-00 { 439-Byte Prgm }
+00 { 669-Byte Prgm }
 01 LBL "Trace"
 
 02 CLMENU
@@ -19,86 +20,132 @@
 04 KEY 1 XEQ "extern"
 05 "intern"
 06 KEY 2 XEQ "intern"
-07 MENU
-08 STOP
+07 "resist"
+08 KEY 3 XEQ "resist"
+09 MENU
+10 STOP
 
-09 LBL "extern"            @ routine for externernal traces
-10 MVAR "IMax"
-11 MVAR "dT"
-12 MVAR "width"
-13 MVAR "height"
-14 VARMENU "extern"
+11 LBL "extern"            @ routine for externernal traces
+12 MVAR "IMax"
+13 MVAR "dT"
+14 MVAR "width"
+15 MVAR "height"
+16 VARMENU "extern"
 
-15 CF 21 @ continue program execution after a VIEW instruction
-16 STOP
-17 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
-18 PGMSLV ".extern"        @ specify solver routine
-19 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
-20 VIEW IND "CONTROL"   @ View the solution
-21 GTO "extern"            @ return to start
+17 CF 21 @ continue program execution after a VIEW instruction
+18 STOP
+19 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
+20 PGMSLV ".extern"        @ specify solver routine
+21 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
+22 VIEW IND "CONTROL"   @ View the solution
+23 GTO "extern"            @ return to start
 
-22 LBL ".extern"           @ function to be solved for externernal traces
-23 XEQ 00 @ call subroutine for default values
-24 RCL "width"
-25 39370.07874
-26 ×
-27 RCL× "height"
-28 39370.07874
-29 ×
-30 0.725
-31 Y↑X
-32 RCL "dT"
-33 0.44
-34 Y↑X
-35 ×
-36 0.048
+24 LBL ".extern"           @ function to be solved for externernal traces
+25 XEQ 00 @ call subroutine for default values
+26 RCL "width"
+27 39370.07874
+28 ×
+29 RCL× "height"
+30 39370.07874
+31 ×
+32 0.725
+33 Y↑X
+34 RCL "dT"
+35 0.44
+36 Y↑X
 37 ×
-38 RCL- "IMax"
-39 RTN
+38 0.048
+39 ×
+40 RCL- "IMax"
+41 RTN
 
-40 LBL "intern"            @ routine for internernal traces
-41 MVAR "IMax"
-42 MVAR "dT"
-43 MVAR "width"
-44 MVAR "height"
-45 VARMENU "intern"
+42 LBL "intern"            @ routine for internernal traces
+43 MVAR "IMax"
+44 MVAR "dT"
+45 MVAR "width"
+46 MVAR "height"
+47 VARMENU "intern"
 
-46 CF 21 @ continue program execution after a VIEW instruction
-47 STOP
-48 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
-49 PGMSLV ".intern"        @ specify solver routine
-50 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
-51 VIEW IND "CONTROL"   @ View the solution
-52 GTO "intern"            @ return to start
+48 CF 21 @ continue program execution after a VIEW instruction
+49 STOP
+50 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
+51 PGMSLV ".intern"        @ specify solver routine
+52 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
+53 VIEW IND "CONTROL"   @ View the solution
+54 GTO "intern"            @ return to start
 
-53 LBL ".intern"           @ function to be solved for internernal traces
-54 XEQ 00 @ call subroutine for default values
-55 RCL "width"
-56 39370.07874
-57 ×
-58 RCL× "height"
-59 39370.07874
-60 ×
-61 0.725
-62 Y↑X
-63 RCL "dT"
-64 0.44
-65 Y↑X
-66 ×
-67 0.024
+55 LBL ".intern"           @ function to be solved for internernal traces
+56 XEQ 00 @ call subroutine for default values
+57 RCL "width"
+58 39370.07874
+59 ×
+60 RCL× "height"
+61 39370.07874
+62 ×
+63 0.725
+64 Y↑X
+65 RCL "dT"
+66 0.44
+67 Y↑X
 68 ×
-69 RCL- "IMax"
-70 RTN
+69 0.024
+70 ×
+71 RCL- "IMax"
+72 RTN
 
-71 LBL 00 @ subroutine for default values
-72 RCL "height"
-73 X≤0?
-74 0.35ᴇ-6 @ default track height of 35um
-75 STO "height"
-76 RCL "dT"
-77 X≤0?
-78 10 @ default temperature rise
-79 STO "dT"
-80 RTN
+73 LBL "resist"            @ routine for resistance computation
+74 MVAR "width"
+75 MVAR "height"
+76 MVAR "length"
+77 MVAR "temp"
+78 MVAR "Res"
+79 VARMENU "resist"
 
-81 END
+80 CF 21 @ continue program execution after a VIEW instruction
+81 STOP
+82 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
+83 PGMSLV ".resist"        @ specify solver routine
+84 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
+85 VIEW IND "CONTROL"   @ View the solution
+86 GTO "resist"            @ return to start
+
+87 LBL ".resist"           @ function to be solved for internernal traces
+88 XEQ 01 @ call subroutine for default values
+89 RCL "temp"
+90 25
+91 -
+92 3.9ᴇ-3
+93 ×
+94 1
+95 +
+96 RCL× "length"
+97 RCL÷ "width"
+98 RCL÷ "height"
+99 1.7ᴇ-8
+100 ×
+101 RCL- "Res"
+102 RTN
+
+103 LBL 00 @ subroutine 00 for default values
+104 RCL "height"
+105 X≤0?
+106 0.35ᴇ-6 @ default track height of 35um
+107 STO "height"
+108 RCL "dT"
+109 X≤0?
+110 10 @ default temperature rise
+111 STO "dT"
+112 RTN
+
+113 LBL 01 @ subroutine 01 for default values
+114 RCL "height"
+115 X≤0?
+116 0.35ᴇ-6 @ default track height of 35um
+117 STO "height"
+118 RCL "temp"
+119 X≤0?
+120 25 @ default temperature rise
+121 STO "temp"
+122 RTN
+
+123 END

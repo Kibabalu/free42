@@ -2,12 +2,17 @@
 
 #### Trace: PCB trace computations according IPC-2221 standard
 
+Three modes: internal traces, external traces and resistance computation
+
 variables:
 
 - maximum trace current IMax in A,
 - allowed temperature rise dT in K (default value 10K),
 - trace width in m
 - trace height in m (default value 35um)
+- trace length in m
+- ambient temperature in degrees C
+- trace resistance in Ohm
 
 For any of them can be solved
 
