@@ -7,6 +7,7 @@
 @ takes and gives the metric unit m instead of mil!
 @
 @ Default value for the trace height is 35um
+@ Default value for the temperature rise is 10K
 @
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
