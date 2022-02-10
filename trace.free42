@@ -4,11 +4,12 @@
 @ externernal traces: I = 0.048 x dT^0.44 x A^0.725
 @ Resistance = Resistivity*Length/Area*(1 + (Temp_Co*(Temp - 25))
 @
-@ The formulas are defined for the units A, K and mil. The programm
+@ The original formulas are defined for the units A, K and mil. The programm
 @ takes and gives the metric unit m instead of mil!
 @
 @ Default value for the trace height is 35um
 @ Default value for the temperature rise is 10K
+@ Default ambient temperature is 25C
 @
 @ Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
@@ -144,7 +145,7 @@
 117 STO "height"
 118 RCL "temp"
 119 X≤0?
-120 25 @ default temperature rise
+120 25 @ default ambient temperature
 121 STO "temp"
 122 RTN
 
