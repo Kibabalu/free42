@@ -1,77 +1,77 @@
 @ computation of a Pi Coupler resp. Collins Filter
 @
-@ Variables:
+@ Input:
 @ resonant frequency f0
-@ Impedance Z1
-@ Impedance Z1
-@ Q factor (if set to 0 a default value of 15 is used 15)
+@ source impedance Z1
+@ load impedance Z2
+@ resonator Q factor (if set to 0 a default value of 15 is used 15)
+@
+@ Output:
+@ capacitance C1
+@ capacitance C2
+@ inductance L
 @
 @ 01.03.2022 Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
-00 { 156-Byte Prgm }
+00 { 150-Byte Prgm }
 01 LBL "PiCplr"
 
 02 INPUT "f0"
 03 INPUT "Z1"
 04 INPUT "Z2"
-05 INPUT "Q"
-06 XEQ 00 @ call subroutine for default values
+05 MVAR "Q"
+06 15
+07 STO "Q"
+08 INPUT "Q"
 
-07 RCL "Z1"
-08 RCL× "Z2"
-09 SQRT
-10 RCL+ "Z1"
-11 RCL× "f0"
-12 2
-13 ×
-14 PI
+09 RCL "Z1"
+10 RCL× "Z2"
+11 SQRT
+12 RCL+ "Z1"
+13 RCL× "f0"
+14 2
 15 ×
-16 1/X
-17 RCL× "Q"
-18 2
-19 ×
-20 STO "C1"
-21 VIEW "C1"
-22 STOP
+16 PI
+17 ×
+18 1/X
+19 RCL× "Q"
+20 2
+21 ×
+22 STO "C1"
+23 VIEW "C1"
+24 STOP
 
-23 RCL "Z1"
-24 RCL× "Z2"
-25 SQRT
-26 RCL+ "Z2"
-27 RCL× "f0"
-28 2
-29 ×
-30 PI
+25 RCL "Z1"
+26 RCL× "Z2"
+27 SQRT
+28 RCL+ "Z2"
+29 RCL× "f0"
+30 2
 31 ×
-32 1/X
-33 RCL× "Q"
-34 2
-35 ×
-36 STO "C2"
-37 VIEW "C2"
-38 STOP
+32 PI
+33 ×
+34 1/X
+35 RCL× "Q"
+36 2
+37 ×
+38 STO "C2"
+39 VIEW "C2"
+40 STOP
 
-39 RCL "Z1"
-40 RCL× "Z2"
-41 SQRT
-42 2
-43 ×
-44 RCL+ "Z2"
-45 RCL+ "Z1"
-46 RCL÷ "Q"
-47 RCL÷ "f0"
-48 PI
-49 ÷
-50 4
+41 RCL "Z1"
+42 RCL× "Z2"
+43 SQRT
+44 2
+45 ×
+46 RCL+ "Z2"
+47 RCL+ "Z1"
+48 RCL÷ "Q"
+49 RCL÷ "f0"
+50 PI
 51 ÷
-52 STO "L"
-53 VIEW "L"
-54 STOP
-55 RTN
-
-56 LBL 00 @ subroutine 00 for default values
-57 RCL "Q"
-58 X≤0?
-59 15 @ def value for Q
-60 STO "Q"
-61 RTN
+52 4
+53 ÷
+54 STO "L"
+55 VIEW "L"
+56 STOP
+57 RTN
