@@ -1,6 +1,6 @@
-@ LC: LC resonator
+@ LC: LC resonator resp. Pi filter
 @
-@ computing a LC resonator
+@ computing a LC resonator resp. a Pi filter
 @
 @ f0 resonant frequency in [Hz]
 @ L inductivity in [H]
