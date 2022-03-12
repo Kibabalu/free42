@@ -1,15 +1,15 @@
 @ computation of a Pi Coupler resp. Collins Filter
 @
 @ Input:
-@ resonant frequency f0
-@ source impedance Z1
-@ load impedance Z2
+@ resonant frequency f0 in [Hz]
+@ source impedance Z1 in [Ohm]
+@ load impedance Z2 in [Ohm]
 @ resonator Q factor (if set to 0 a default value of 15 is used 15)
 @
 @ Output:
-@ capacitance C1
-@ capacitance C2
-@ inductance L
+@ capacitance C1 in [F]
+@ capacitance C2 in [F]
+@ inductance L in [H]
 @
 @ 01.03.2022 Frank Kirschbaum, frank.kirschbaumr@gmail.com
 @
