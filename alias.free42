@@ -1,5 +1,11 @@
 @ alias: alias frequency computations
 @
+@ fa = abs(f-NINT(f/fs))
+@
+@ fs    sampling frequency
+@ f     frequency
+@ fa    aliasing frequency
+@
 @ 2022-04-08: Initial version
 @
 00 { 112-Byte Prgm }
@@ -9,17 +15,16 @@
 04 MVAR "fa"
 05 VARMENU "ALIAS"
 
-
-06 CF 21 @ continue program execution after a VIEW instruction
-07 REALRES @ calculate real results only
+06 CF 21                @ continue program execution after a VIEW instruction
+07 REALRES              @ calculate real results only
 08 STOP
 09 ASTO "CONTROL"       @ store the name of the unknown variable in CONTROL
-10 PGMSLV ".ALIAS"       @ specify solver routine
+10 PGMSLV ".ALIAS"      @ specify solver routine
 11 SOLVE IND "CONTROL"  @ Indirectly specify the variable to be solved
 12 VIEW IND "CONTROL"   @ View the solution
-13 GTO "ALIAS"           @ return to start
+13 GTO "ALIAS"          @ return to start
 
-14 LBL ".ALIAS"          @ function to solve
+14 LBL ".ALIAS"         @ function to solve
 15 RCL "f"
 16 RCL÷ "fs"
 17 ENTER
