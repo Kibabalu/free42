@@ -27,10 +27,10 @@
 14 LBL ".ALIAS"         @ function to solve
 15 RCL "f"
 16 RCL÷ "fs"
-17 ENTER
-18 FP
-19 +
-20 IP
+17 ENTER                @ rounding to integer
+18 FP                   @
+19 +                    @
+20 IP                   @
 21 RCL× "fs"
 22 -1
 23 ×
