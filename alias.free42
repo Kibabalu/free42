@@ -1,6 +1,7 @@
 @ alias: alias frequency computations
 @
-@ fa = abs(f-NINT(f/fs))
+@ solved equation:
+@ abs(f-NINT(f/fs))-fa=0
 @
 @ fs    sampling frequency
 @ f     frequency
