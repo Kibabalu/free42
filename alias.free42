@@ -3,17 +3,19 @@
 @ solved equation:
 @ abs(f-NINT(f/fs))-fa=0
 @
+@ source: https://www.translatorscafe.com/unit-converter/de-DE/calculator/aliasing-frequency/
+@
 @ fs    sampling frequency
 @ f     frequency
 @ fa    aliasing frequency
 @
-@ 2022-04-08: Initial version
+@ 2022-04-08: Initial version, Frank Kirschbaum
 @
 00 { 112-Byte Prgm }
 01 LBL "ALIAS"
-02 MVAR "fs"
-03 MVAR "f"
-04 MVAR "fa"
+02 MVAR "fs"            @ sampling frequency
+03 MVAR "f"             @ signal frequency
+04 MVAR "fa"            @ alias frequency
 05 VARMENU "ALIAS"
 
 06 CF 21                @ continue program execution after a VIEW instruction
